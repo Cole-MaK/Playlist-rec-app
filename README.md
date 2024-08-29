@@ -3,4 +3,6 @@ This project was created because I hate going through my whole Daylist or Discov
 
 ## How to Use?
 This application utilizes the Spotify API so you will need to follow these steps:
-1. Create an account on Spotify's API site https://developer.spotify.com/documentation/web-api 
+1. Create an account on Spotify's API site: https://developer.spotify.com/documentation/web-api
+2. Go to your dashboard and click "Create app"
+- App name and description don't matter **but**

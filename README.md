@@ -10,5 +10,5 @@ This application utilizes the Spotify API so you will need to follow these steps
 3. Once the app is created go into it and click "Settings"
 4. Click "View Client Secret"
 5. Create a .env file to store the Client ID and Client Secret, it should look like
-    CLIENT_ID = '{your client id}'
-    SECRET_KEY = '{your client secret}'
+  - CLIENT_ID = '{your client id}'
+  - SECRET_KEY = '{your client secret}'

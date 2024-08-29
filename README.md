@@ -17,3 +17,4 @@ This application utilizes the Spotify API so you will need to follow these steps
 8. Go to the URL provided in the terminal
 
 ## Now enjoy :D
+The app is still fairly bare and I am planning on updating it later.

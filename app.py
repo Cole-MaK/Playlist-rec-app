@@ -11,7 +11,7 @@ app.secret_key = os.getenv('SECRET_KEY') # set secret key in .env file
 def home_page():
 
     client_id = os.getenv('CLIENT_ID')
-    redirect_uri = 'http://127.0.0.1:5000/callback' #'https://daylist-rec-app-0400112ba358.herokuapp.com/callback'
+    redirect_uri = 'http://127.0.0.1:5000/callback'
     code_verifier = generate_code_verifier()
     code_challenge = generate_code_challenge(code_verifier)
 

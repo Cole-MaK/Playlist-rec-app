@@ -5,4 +5,5 @@ This project was created because I hate going through my whole Daylist or Discov
 This application utilizes the Spotify API so you will need to follow these steps:
 1. Create an account on Spotify's API site: https://developer.spotify.com/documentation/web-api
 2. Go to your dashboard and click "Create app"
-- App name and description don't matter **but**
+- App name and description don't matter
+- ***make sure in the redirect uri field input: http://127.0.0.1:5000/callback***

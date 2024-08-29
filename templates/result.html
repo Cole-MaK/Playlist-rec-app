@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Spotify Recommender - Select
+{% endblock %}
+
+{% block content %}
+<div style="height: 75px;"></div>
+<form method="POST" action="/recommend">
+    <div class="song-container">
+        {% for playlist, image in playlist_items.items() %}
+            <div class="input-container">
+                <div class="radio-tile-group">
+                    <input id = '{{ playlist }}' type="radio" name="selected_playlist" value="{{ playlist }}"> 
+                    <div class="radio-tile">
+                        <img src = "{{ image }}" class='playlist-image' alt="Image">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="submit-button-container">
+        <button class="submit-button" type="'submit">RECOMMEND SONGS</button>
+    </div>
+    <div>
+        <div class="spotify-playlists">
+            <div class="box"></div>
+            {% for playlist, image in other_items.items() %}
+                <div class="input-container">
+                    <div class="radio-tile-group">
+                        <input id = '{{ playlist }}' type="radio" name="selected_playlist-compare" value="{{ playlist }}"> 
+                        <div class="radio-tile">
+                            <img src = "{{ image }}" class='playlist-image' alt="Image">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="box"></div>
+        </div>
+    </div>
+</form>
+
+    <style>
+        .playlist-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover; 
+            border-radius: 10%;
+            z-index: 1;
+        }
+
+        input:checked + .radio-tile .playlist-image {
+            width: 90px;
+            height: 90px;
+        }
+
+        .song-container {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px;
+            height: 260px; /* Adjust as needed */
+            width: 1700px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .radio-tile-group {
+            position: contents;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-container input {
+            position: absolute;
+            height:100px;
+            width: 100px;
+            align-content: center;
+            margin: 0;
+            cursor: pointer;
+            z-index: 2;
+            opacity: 0;
+        }
+
+        .input-container .radio-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 50ms ease;
+        }
+
+        input:checked + .radio-tile {
+            background-color: aliceblue;
+            width: 100px;
+            height: 100px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10%;
+        }
+
+        .submit-button-container {
+            display:flex;
+            height: 200px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .submit-button {
+            height: 50px;
+            width: 200px;
+            background-color: rgb(179, 179, 179);
+            border: none;
+            border-radius: 5%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .spotify-playlists {
+            display: flex;
+            height: 120px;
+            gap: 8px;
+        }
+        .box {
+            flex:1;
+        }
+
+    </style>
+{% endblock %}

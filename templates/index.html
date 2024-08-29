@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+<div class="authorize">
+    <a href = "{{ url|safe }}">
+        <button class = 'authorize-button' type="Button">AUTHORIZE ON SPOTIFY</button>
+    </a>
+</div>
+
+<span></span>
+
+<div style="display: flex;
+            flex-direction: row;">
+    <div class="box"></div>
+    <div class="body-text">
+                
+        <h2>What is this app?</h2>
+
+        <p>This app takes one your your playlists to compare to either your Daylist or Discover Weekly
+            to give you a ranking of songs that it thinks you will like the most.
+        </p>
+
+        <h2>How do I use this?</h2>
+
+        <p>1. Sign into Spotify and authorizing 
+            <br>
+        2. choose one of your playlists to use to help the algorithm give you recommendations
+            <br>
+        3. select either your daylist or discover weekly to look through
+            <br>
+        4. press the button :D 
+            <br>
+        5. You want to make sure your daylist and discover weekly is shown on your profile by right clicking the playlist
+            and selecting, "Add to Profile". It is best to select a song or playlist that has a similar genre to that of 
+            your daylist. If comparing to Discover weekly it does not matter.
+        </p>
+
+        <h2>Why do I need to Authorize</h2>
+
+        <p>Authorization is required to get song information from your different playlists</p>
+
+    </div>
+    <div class="box"></div>
+</div>
+<style>
+    .body-text {
+        max-width: 500px;
+        width: 500px;
+        text-align: center;
+    }
+    .form-text {
+        padding-bottom: 50px;
+        padding-top: 50px;
+        text-align: left;
+    }
+    .box {
+        flex:1;
+    }
+
+    .authorize {
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .authorize-button {
+        height: 50px;
+        width: fit-content;
+        border-radius: 5%;
+    }
+</style>
+{% endblock %}

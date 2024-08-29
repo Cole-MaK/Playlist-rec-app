@@ -35,11 +35,8 @@ def generate_code_challenge(code_verifier):
 
 def get_Token(auth_code, code_verifier):
     client_id = os.getenv('CLIENT_ID')
-    redirect_uri = 'http://127.0.0.1:5000/callback'#'https://daylist-rec-app-0400112ba358.herokuapp.com/callback'
-    # redirect_uri = 'http://127.0.0.1:5000/callback'
-    # code_verifier = pkce.generate_code_verifier(length=128)
-    # code_challenge = pkce.get_code_challenge(code_verifier)
-
+    redirect_uri = 'http://127.0.0.1:5000/callback'
+    
     url = 'https://accounts.spotify.com/api/token' #post request url
 
     headers = { # post request headers
@@ -191,8 +188,6 @@ def create_playlist_df(token, playlist_id):
     playlist_df['genres'] = playlist_genre
 
     return daylist_df, playlist_df
-    # daylist_df.to_csv('spotify_songs_daylist.csv')
-    # playlist_df.to_csv('spotify_songs_playlist.csv')
 
 def ohe_prep(df, column, new_name): 
     """ 
@@ -274,10 +269,9 @@ def create_necessary_outputs(token, playlist_id, df):
     json_result = json.loads(result.content)
 
     for ix, i in enumerate(json_result['tracks']['items']):
-        #print(i['track']['artists'][0]['name'])
         playlist.loc[ix, 'artist'] = i['track']['artists'][0]['name']
         playlist.loc[ix, 'name'] = i['track']['name']
-        playlist.loc[ix, 'id'] = i['track']['id'] # ['uri'].split(':')[2]
+        playlist.loc[ix, 'id'] = i['track']['id']
         playlist.loc[ix, 'url'] = i['track']['album']['images'][1]['url']
         playlist.loc[ix, 'date_added'] = i['added_at']
 
@@ -301,9 +295,9 @@ def generate_playlist_feature(complete_feature_set, playlist_df, weight_factor):
         complete_feature_set_nonplaylist (pandas dataframe): 
     """
     
-    complete_feature_set_playlist = complete_feature_set[complete_feature_set['id'].isin(playlist_df['id'].values)]#.drop('id', axis = 1).mean(axis =0)
+    complete_feature_set_playlist = complete_feature_set[complete_feature_set['id'].isin(playlist_df['id'].values)]
     complete_feature_set_playlist = complete_feature_set_playlist.merge(playlist_df[['id','date_added']], on = 'id', how = 'inner')
-    complete_feature_set_nonplaylist = complete_feature_set[~complete_feature_set['id'].isin(playlist_df['id'].values)]#.drop('id', axis = 1)
+    complete_feature_set_nonplaylist = complete_feature_set[~complete_feature_set['id'].isin(playlist_df['id'].values)]
     
     playlist_feature_set = complete_feature_set_playlist.sort_values('date_added',ascending=False)
 
@@ -315,10 +309,8 @@ def generate_playlist_feature(complete_feature_set, playlist_df, weight_factor):
     playlist_feature_set['weight'] = playlist_feature_set['months_from_recent'].apply(lambda x: weight_factor ** (-x))
     
     playlist_feature_set_weighted = playlist_feature_set.copy()
-    #print(playlist_feature_set_weighted.iloc[:,:-4].columns)
     playlist_feature_set_weighted.update(playlist_feature_set_weighted.iloc[:,:-4].mul(playlist_feature_set_weighted.weight,0))
     playlist_feature_set_weighted_final = playlist_feature_set_weighted.iloc[:, :-4]
-    #playlist_feature_set_weighted_final['id'] = playlist_feature_set['id']
     
     return playlist_feature_set_weighted_final.sum(axis = 0), complete_feature_set_nonplaylist
 
@@ -337,10 +329,9 @@ def generate_playlist_recos(df, features, nonplaylist_features):
     
     non_playlist_df = df[df['id'].isin(nonplaylist_features['id'].values)]
     non_playlist_df['sim'] = cosine_similarity(nonplaylist_features.drop('id', axis = 1).values, features.values.reshape(1, -1))[:,0]
-    non_playlist_df_top_40 = non_playlist_df.sort_values('sim',ascending = False).head(50)
-    #non_playlist_df_top_40['url'] = non_playlist_df_top_40['id'].apply(lambda x: sp.track(x)['album']['images'][1]['url'])
+    non_playlist_df_top_50 = non_playlist_df.sort_values('sim',ascending = False).head(50)
     
-    return non_playlist_df_top_40
+    return non_playlist_df_top_50
 
 def generate_recommendation(token, playlist_id, spotify_df_1, spotify_df_2):
 

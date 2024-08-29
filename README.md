@@ -12,3 +12,8 @@ This application utilizes the Spotify API so you will need to follow these steps
 5. Create a .env file to store the Client ID and Client Secret, it should look like
   - CLIENT_ID = '{your client id}'
   - SECRET_KEY = '{your client secret}'
+6. make sure the requirments are installed
+7. in the terminal run "export FLASK_APP=app" then "flask run"
+8. Go to the URL provided in the terminal
+
+## Now enjoy :D

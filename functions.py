@@ -34,6 +34,11 @@ def generate_code_challenge(code_verifier):
     return code_challenge
 
 def get_Token(auth_code, code_verifier):
+    '''
+    auth_code (str): retrieved from url after spotify authorization
+
+    returns access token to be used for spotify API calls
+    '''
     client_id = os.getenv('CLIENT_ID')
     redirect_uri = 'http://127.0.0.1:5000/callback'
     
@@ -56,9 +61,19 @@ def get_Token(auth_code, code_verifier):
     return token
 
 def get_auth_header(token):
-   return {'Authorization': 'Bearer ' + token}
+    '''
+    token (str): string to be used in authorization formatting
+
+    returns formatted authorization
+    '''
+    return {'Authorization': 'Bearer ' + token}
 
 def get_user_profile(token):
+    '''
+    token (str): used for authorization, retrieved from get_Token function
+
+    returns username of the Spotify User
+    '''
     url = f'https://api.spotify.com/v1/me'
     header = get_auth_header(token)
     result = get(url, headers = header)
